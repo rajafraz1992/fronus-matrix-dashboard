@@ -16,9 +16,9 @@ const STATION_ID=Number(process.env.SOLARMAN_STATION_ID||3332398);
 app.use(express.static(path.join(__dirname,"public")));
 app.get("/",(req,res)=>{res.sendFile(path.join(__dirname,"public","index.html"));});
 let tokenCache={token:"",expiresAt:0};
-async function getToken(){
+async function getToken(force=false){
  const now=Date.now();
- if(tokenCache.token&&now<tokenCache.expiresAt-300000)return tokenCache.token;
+ if(!force && tokenCache.token&&now<tokenCache.expiresAt-300000)return tokenCache.token;
  if(!APP_ID||!APP_SECRET||!EMAIL||!PASSWORD_HASH)throw new Error("Missing SOLARMAN environment variables");
  const url=`${BASE_URL}/account/v1.0/token?appId=${encodeURIComponent(APP_ID)}&language=en`;
  const r=await fetch(url,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({appSecret:APP_SECRET,email:EMAIL,password:PASSWORD_HASH,orgId:ORG_ID})});
@@ -28,9 +28,24 @@ async function getToken(){
  return tokenCache.token;
 }
 async function solarmanPost(path,body){
- const token=await getToken();
- const r=await fetch(`${BASE_URL}${path}`,{method:"POST",headers:{"content-type":"application/json",Authorization:`bearer ${token}`},body:JSON.stringify(body)});
- return r.json();
+ async function doRequest(token){
+  const r=await fetch(`${BASE_URL}${path}`,{method:"POST",headers:{"content-type":"application/json",Authorization:`bearer ${token}`},body:JSON.stringify(body)});
+  return r.json();
+ }
+
+ let token=await getToken(false);
+ let data=await doRequest(token);
+
+ // SOLARMAN can invalidate a cached token before its advertised expiry.
+ // If that happens, discard it, request a fresh Business token, and retry once.
+ const msg=String(data?.msg||data?.message||"").toLowerCase();
+ const tokenInvalid = data?.success === false && (msg.includes("invalid token") || msg.includes("token invalid") || msg.includes("auth invalid") || msg.includes("unauthorized"));
+ if(tokenInvalid){
+  tokenCache={token:"",expiresAt:0};
+  token=await getToken(true);
+  data=await doRequest(token);
+ }
+ return data;
 }
 function mapDataList(list=[]){const m={};for(const x of list)m[x.key]={value:x.value,unit:x.unit,name:x.name};return m}
 function n(m,k){const v=m[k]?.value;if(v===""||v==null)return null;const x=Number(v);return Number.isFinite(x)?x:null}
