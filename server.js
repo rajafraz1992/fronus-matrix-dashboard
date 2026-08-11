@@ -1,5 +1,9 @@
 import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
 const app=express();
+const __filename=fileURLToPath(import.meta.url);
+const __dirname=path.dirname(__filename);
 const PORT=Number(process.env.PORT||10000);
 const BASE_URL=process.env.SOLARMAN_BASE_URL||"https://globalapi.solarmanpv.com";
 const APP_ID=process.env.SOLARMAN_APP_ID||"";
@@ -9,7 +13,8 @@ const PASSWORD_HASH=process.env.SOLARMAN_PASSWORD_HASH||"";
 const ORG_ID=Number(process.env.SOLARMAN_ORG_ID||195093);
 const DEVICE_SN=process.env.SOLARMAN_DEVICE_SN||"0230306052";
 const STATION_ID=Number(process.env.SOLARMAN_STATION_ID||3332398);
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname,"public")));
+app.get("/",(req,res)=>{res.sendFile(path.join(__dirname,"public","index.html"));});
 let tokenCache={token:"",expiresAt:0};
 async function getToken(){
  const now=Date.now();
