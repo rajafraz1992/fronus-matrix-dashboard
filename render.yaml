@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: fronus-matrix-dashboard
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: SOLARMAN_BASE_URL
+        value: https://globalapi.solarmanpv.com
+      - key: SOLARMAN_APP_ID
+        sync: false
+      - key: SOLARMAN_APP_SECRET
+        sync: false
+      - key: SOLARMAN_EMAIL
+        sync: false
+      - key: SOLARMAN_PASSWORD_HASH
+        sync: false
+      - key: SOLARMAN_ORG_ID
+        value: "195093"
+      - key: SOLARMAN_DEVICE_SN
+        value: "0230306052"
+      - key: SOLARMAN_STATION_ID
+        value: "3332398"
