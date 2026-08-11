@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en" data-theme="solar">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#08111f">
+  <title>Raja Fraz Solar Command Center</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <svg class="svg-defs" aria-hidden="true">
+    <defs>
+      <symbol id="i-overview" viewBox="0 0 24 24"><path d="M4 13h6V4H4v9Zm0 7h6v-4H4v4Zm10 0h6v-9h-6v9Zm0-16v4h6V4h-6Z"/></symbol>
+      <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 19V5m0 14h16M7 15l4-4 3 2 5-7"/></symbol>
+      <symbol id="i-energy" viewBox="0 0 24 24"><path d="m13 2-8 12h7l-1 8 8-12h-7l1-8Z"/></symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 2.8 19h18.4L12 3Zm0 5v5m0 3v.1"/></symbol>
+      <symbol id="i-device" viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M9 6h6m-6 11h6"/></symbol>
+      <symbol id="i-settings" viewBox="0 0 24 24"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z"/><path d="m4.9 4.9 1.4 1.4M17.7 17.7l1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4M12 2v2m0 16v2"/></symbol>
+      <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3M4.9 4.9 7 7m10 10 2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1"/></symbol>
+      <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8v10h-6v-6H9v6H3V11Z"/></symbol>
+      <symbol id="i-grid" viewBox="0 0 24 24"><path d="M12 2 6 22m6-20 6 20M8 8h8M6.5 13h11M5 18h14M9 22l3-20 3 20"/></symbol>
+      <symbol id="i-battery" viewBox="0 0 24 24"><rect x="2" y="7" width="18" height="11" rx="2"/><path d="M20 10h2v5h-2M8 10v5m-2-2.5h4"/></symbol>
+      <symbol id="i-inverter" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M8 7c1.3-2 2.7 2 4 0s2.7 2 4 0M9 16h4m3 0h.1"/></symbol>
+      <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M6.1 8A7 7 0 0 1 18 6l2 3M17.9 16A7 7 0 0 1 6 18l-2-3"/></symbol>
+      <symbol id="i-fullscreen" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M8 21H3v-5m13 5h5v-5"/></symbol>
+      <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M3 9a14 14 0 0 1 18 0M6.5 13a9 9 0 0 1 11 0M10 17a4 4 0 0 1 4 0M12 20h.1"/></symbol>
+      <symbol id="i-temp" viewBox="0 0 24 24"><path d="M9 14.7V5a3 3 0 0 1 6 0v9.7a5 5 0 1 1-6 0Z"/><path d="M12 8v9"/></symbol>
+      <symbol id="i-fan" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M12 10c-1-5 4-7 5-4 1 2-2 5-5 6m2 1c5-1 6 4 3 6-2 1-4-3-5-6m-2 0c-3 4-7 1-6-2 1-3 5-2 8 1"/></symbol>
+      <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18h11a4 4 0 0 0 .3-8A6 6 0 0 0 7 8.2 5 5 0 0 0 7 18Z"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+      <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7V5Z"/></symbol>
+      <symbol id="i-volume" viewBox="0 0 24 24"><path d="M5 9h4l5-4v14l-5-4H5V9Zm12 1a3 3 0 0 1 0 4m2-7a7 7 0 0 1 0 10"/></symbol>
+      <linearGradient id="solarGradient" x1="0" x2="1"><stop stop-color="#f6b84b"/><stop offset="1" stop-color="#ffd56c"/></linearGradient>
+      <linearGradient id="loadGradient" x1="0" x2="1"><stop stop-color="#7d8cff"/><stop offset="1" stop-color="#b18cff"/></linearGradient>
+      <linearGradient id="gridGradient" x1="0" x2="1"><stop stop-color="#3ab7ff"/><stop offset="1" stop-color="#4ee1cf"/></linearGradient>
+    </defs>
+  </svg>
+
+  <div class="app-shell">
+    <aside class="desktop-tabs" id="sidebar">
+      <nav class="primary-nav" aria-label="Dashboard sections">
+        <button class="nav-item is-active" data-view="overview"><svg><use href="#i-overview"/></svg><span>Dashboard</span></button>
+        <button class="nav-item" data-view="charts"><svg><use href="#i-chart"/></svg><span>Charts</span></button>
+        <button class="nav-item" data-view="energy"><svg><use href="#i-energy"/></svg><span>Totals</span></button>
+        <button class="nav-item" data-view="device"><svg><use href="#i-device"/></svg><span>Power</span></button>
+        <button class="nav-item" data-view="alerts"><svg><use href="#i-alert"/></svg><span>Alerts</span><b id="navAlertCount" hidden>0</b></button>
+        <button class="nav-item" data-view="settings"><svg><use href="#i-settings"/></svg><span>Configuration</span></button>
+      </nav>
+      <div class="tab-brand"><span class="brand-mark"><svg><use href="#i-energy"/></svg></span><b>RAJA FRAZ</b></div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="title-block">
+          <div class="site-logo"><svg><use href="#i-inverter"/></svg></div>
+          <div><p id="pageEyebrow">LIVE SITE OVERVIEW</p><h1 id="pageTitle">Fronus Matrix 6K</h1></div>
+        </div>
+        <div class="topbar-actions">
+          <div class="weather-chip" title="Gujrat, Pakistan weather">
+            <svg><use href="#i-cloud"/></svg>
+            <strong id="weatherTemp">—°</strong>
+            <span><b id="weatherCondition">Weather loading</b><small>Gujrat, Pakistan</small></span>
+          </div>
+          <div class="live-chip" id="liveChip"><span></span><div><strong id="connectionStatus">CONNECTING</strong><small id="lastUpdated">Waiting for API</small></div></div>
+          <div class="clock"><strong id="clockTime">--:--:--</strong><span id="clockDate">---</span></div>
+          <button class="icon-button" id="soundButton" aria-label="Toggle racing gauge sound" title="Racing gauge sound"><svg><use href="#i-volume"/></svg></button>
+          <button class="icon-button" id="refreshButton" aria-label="Refresh now" title="Refresh now"><svg><use href="#i-refresh"/></svg></button>
+          <button class="icon-button" id="fullscreenButton" aria-label="Toggle fullscreen" title="Fullscreen"><svg><use href="#i-fullscreen"/></svg></button>
+        </div>
+      </header>
+
+      <div class="connection-banner" id="connectionBanner" hidden><strong>Live API unavailable.</strong><span id="connectionMessage">Showing the latest saved values while reconnecting.</span></div>
+
+      <section class="view is-active" id="view-overview" aria-labelledby="pageTitle">
+        <div class="assistant-dashboard">
+          <section class="assistant-left">
+            <div class="equipment-grid">
+              <article class="equipment-tile"><div class="equipment-icon inverter"><svg><use href="#i-inverter"/></svg></div><div><b>Inverter</b><strong id="inverterState">CONNECTING</strong><span id="flowMode">Waiting for API</span></div></article>
+              <article class="equipment-tile"><div class="equipment-icon solar"><svg><use href="#i-sun"/></svg></div><div><b>Solar PV</b><strong><span id="solarPower">—</span> <small id="solarUnit">W</small></strong><span id="solarSubtitle">PV1 — · PV2 —</span></div></article>
+              <article class="equipment-tile"><div class="equipment-icon grid"><svg><use href="#i-grid"/></svg></div><div><b>Grid</b><strong id="gridVoltageMini">— V</strong><span id="gridDirectionBadge">Checking direction</span></div></article>
+              <article class="equipment-tile"><div class="equipment-icon battery"><svg><use href="#i-battery"/></svg></div><div><b>Battery</b><strong><span id="batterySoc">—</span> <small>%</small></strong><span id="batteryMode">Checking battery</span></div></article>
+            </div>
+
+            <div class="assistant-gauge-grid">
+              <article class="assistant-gauge load"><div class="semi-gauge"><svg viewBox="0 0 220 125"><path class="gauge-track" pathLength="100" d="M18 110 A92 92 0 0 1 202 110"/><path class="gauge-value" id="loadGauge" pathLength="100" d="M18 110 A92 92 0 0 1 202 110"/></svg><div><strong><b id="loadPower">—</b> <small id="loadUnit">W</small></strong><span>Load</span></div></div><footer><span id="loadPercent">0% of 6 kW</span><span id="loadVoltageMini">— V</span></footer></article>
+              <article class="assistant-gauge solar"><div class="semi-gauge"><svg viewBox="0 0 220 125"><path class="gauge-track" pathLength="100" d="M18 110 A92 92 0 0 1 202 110"/><path class="gauge-value" id="solarGauge" pathLength="100" d="M18 110 A92 92 0 0 1 202 110"/></svg><div><strong><b id="solarGaugePower">—</b> <small id="solarGaugeUnit">W</small></strong><span>Solar PV</span></div></div><footer><span id="solarPercent">0% of 4.36 kWp</span><span id="peakSolar">Peak —</span></footer></article>
+              <article class="assistant-gauge grid"><div class="semi-gauge"><svg viewBox="0 0 220 125"><path class="gauge-track" pathLength="100" d="M18 110 A92 92 0 0 1 202 110"/><path class="gauge-value" id="gridGauge" pathLength="100" d="M18 110 A92 92 0 0 1 202 110"/></svg><div><strong><b id="gridPower">—</b> <small id="gridUnit">W</small></strong><span>Grid</span></div></div><footer><span id="gridPercent">Import / export</span><span id="gridFrequencyMini">— Hz</span></footer></article>
+              <article class="assistant-gauge smart"><div class="semi-gauge"><svg viewBox="0 0 220 125"><path class="gauge-track" pathLength="100" d="M18 110 A92 92 0 0 1 202 110"/><path class="gauge-value" id="smartLoadGauge" pathLength="100" d="M18 110 A92 92 0 0 1 202 110"/></svg><div><strong><b id="smartLoadPower">—</b> <small id="smartLoadUnit">W</small></strong><span>Smart Load</span></div></div><footer><span>AC / Motor</span><span id="smartLoadState">IDLE</span></footer></article>
+            </div>
+
+            <div class="left-status-strip">
+              <span><svg><use href="#i-temp"/></svg>Battery <b><i id="batteryTemp">—</i>°C</b></span>
+              <span><svg><use href="#i-temp"/></svg>Transformer <b><i id="transformerTemp">—</i>°C</b></span>
+              <span><svg><use href="#i-temp"/></svg>Radiator <b><i id="radiatorTemp">—</i>°C</b></span>
+            </div>
+          </section>
+
+          <section class="assistant-chart main-overview-chart">
+            <div class="assistant-chart-title"><strong>Overview</strong><span id="flowHeadline">Connecting to your inverter</span></div>
+            <div class="chart-wrap"><canvas id="overviewChart"></canvas><div class="chart-empty" id="overviewChartEmpty">History starts automatically with the hosted Matrix collector.</div></div>
+            <div class="assistant-legend"><span class="load">Load power</span><span class="grid">Grid import / export</span><span class="solar">PV power</span></div>
+          </section>
+
+          <section class="assistant-right">
+            <article class="assistant-chart compact-chart">
+              <div class="assistant-chart-title"><strong>Grid power</strong><span id="gridChartCaption">Import red above zero · export green below zero</span></div>
+              <div class="chart-wrap"><canvas id="gridOverviewChart"></canvas></div>
+            </article>
+            <article class="assistant-chart compact-chart">
+              <div class="assistant-chart-title"><strong>PV1 & PV2 generation</strong><span><b id="pv1Mini">PV1 — W</b> · <b id="pv2Mini">PV2 — W</b></span></div>
+              <div class="chart-wrap"><canvas id="pvOverviewChart"></canvas></div>
+            </article>
+          </section>
+        </div>
+
+        <div class="dashboard-footer-strip">
+          <span><b>PV1</b><strong><i id="pv1Power">—</i> W</strong><em id="pv1Electrical">— V · — A</em></span>
+          <span><b>PV2</b><strong><i id="pv2Power">—</i> W</strong><em id="pv2Electrical">— V · — A</em></span>
+          <span><b>AC output</b><strong id="loadCurrentMini">— A</strong><em>6,000 W capacity</em></span>
+          <span><b>System health</b><strong id="healthGrade">Analysing</strong><em id="healthSummary">Waiting for telemetry</em></span>
+        </div>
+      </section>
+
+      <section class="view" id="view-charts">
+        <div class="section-toolbar">
+          <div><p>HISTORICAL TELEMETRY</p><h2>Interactive Matrix performance charts</h2><span>Hover for exact readings. Data is recorded by the hosted collector while the Render service is running.</span></div>
+          <div class="segmented" id="historyRange"><button data-hours="1">1H</button><button data-hours="6">6H</button><button class="is-active" data-hours="24">24H</button><button data-hours="168">7D</button><button data-hours="720">30D</button></div>
+        </div>
+        <article class="card chart-panel">
+          <div class="card-heading"><div><span>POWER OVERVIEW</span><h2>Solar · Consumption · Grid</h2></div><div class="legend"><button class="series-toggle solar is-active" data-series="solar">Solar</button><button class="series-toggle load is-active" data-series="load">Load</button><button class="series-toggle grid is-active" data-series="grid">Grid</button></div></div>
+          <div class="chart-wrap large"><canvas id="historyChart"></canvas><div class="chart-tooltip" id="historyTooltip" hidden></div></div>
+        </article>
+        <div class="chart-grid">
+          <article class="card chart-panel small"><div class="card-heading compact"><div><span>PV STRINGS</span><h2>PV1 & PV2 generation</h2></div></div><div class="chart-wrap"><canvas id="pvChart"></canvas></div></article>
+          <article class="card chart-panel small"><div class="card-heading compact"><div><span>INVERTER THERMAL</span><h2>Matrix temperatures</h2></div></div><div class="chart-wrap"><canvas id="thermalChart"></canvas></div></article>
+          <article class="card chart-panel small"><div class="card-heading compact"><div><span>AC QUALITY</span><h2>Grid & output voltage</h2></div></div><div class="chart-wrap"><canvas id="voltageChart"></canvas></div></article>
+          <article class="card chart-panel small"><div class="card-heading compact"><div><span>POWER BALANCE</span><h2>Production vs consumption</h2></div></div><div class="balance-summary" id="balanceSummary"><strong>Waiting for history</strong><p>The collector will calculate your production ratio and grid dependence.</p></div></article>
+        </div>
+      </section>
+
+      <section class="view" id="view-energy">
+        <div class="section-toolbar"><div><p>SERVER ENERGY TOTALS</p><h2>Energy performance</h2><span>These totals are supplied by Raja Fraz Matrix monitoring and remain available while the hosted collector retains history.</span></div><div class="segmented" id="energyPeriod"><button class="is-active" data-period="T">Today</button><button data-period="Y">Yesterday</button><button data-period="TM">This month</button><button data-period="LM">Last month</button></div></div>
+        <div class="energy-summary-grid">
+          <article class="card energy-kpi solar"><span>SOLAR PRODUCTION</span><strong><b id="energySolar">—</b> kWh</strong><small id="energySolarCaption">Selected period</small></article>
+          <article class="card energy-kpi load"><span>LOAD CONSUMED</span><strong><b id="energyLoad">—</b> kWh</strong><small>Home energy usage</small></article>
+          <article class="card energy-kpi grid"><span>GRID IMPORT</span><strong><b id="energyImport">—</b> kWh</strong><small>Energy imported</small></article>
+          <article class="card energy-kpi export"><span>GRID EXPORT</span><strong><b id="energyExport">—</b> kWh</strong><small>Energy exported</small></article>
+        </div>
+        <div class="energy-layout">
+          <article class="card energy-visual"><div class="card-heading"><div><span>ENERGY BALANCE</span><h2 id="energyPeriodLabel">Today</h2></div><span id="energySync">Syncing…</span></div><div class="energy-bars" id="energyBars"></div></article>
+          <article class="card savings-card"><span>ESTIMATED SOLAR VALUE</span><strong><small>PKR</small> <b id="energySavings">—</b></strong><p>Based on the electricity rate returned by your server.</p><div class="savings-row"><span>Rate <b id="energyRate">—</b></span><span>Net solar <b id="energyNetSolar">—</b></span><span>Export after use <b id="energyExportAfter">—</b></span></div></article>
+        </div>
+      </section>
+
+      <section class="view" id="view-alerts">
+        <div class="section-toolbar"><div><p>SYSTEM SUPERVISION</p><h2>Alerts & operating limits</h2><span>Background rules continue while the hosted collector is running.</span></div><div class="pill success" id="alertStatePill"><span></span><b id="alertState">ALL NORMAL</b></div></div>
+        <div class="alerts-layout">
+          <article class="card active-alerts"><div class="card-heading"><div><span>ACTIVE CONDITIONS</span><h2 id="activeAlertTitle">No active warnings</h2></div><b id="activeAlertCount">0</b></div><div id="activeAlertList" class="alert-list"><div class="empty-state"><svg><use href="#i-check"/></svg><div><strong>System operating normally</strong><p>All monitored values are inside the configured limits.</p></div></div></div></article>
+          <article class="card limit-card"><div class="card-heading compact"><div><span>MONITORED LIMITS</span><h2>Protection thresholds</h2></div></div><div class="limit-grid"><span>MPPT temperature <b id="limitTemp">75°C</b></span><span>AC load <b id="limitLoad">90%</b></span><span>Grid voltage low <b id="limitGridLow">180 V</b></span><span>Grid voltage high <b id="limitGridHigh">260 V</b></span></div><button class="text-button" data-go="settings">Change alert thresholds →</button></article>
+        </div>
+        <article class="card event-log-card"><div class="card-heading"><div><span>PERSISTENT EVENT LOG</span><h2>Recent alerts</h2></div><button class="text-button" id="exportAlertsButton">Export CSV</button></div><div class="event-table"><div class="event-row table-head"><span>Time</span><span>Severity</span><span>Condition</span><span>Reading</span></div><div id="eventRows"><div class="empty-table">No alert events have been recorded.</div></div></div></article>
+      </section>
+
+      <section class="view" id="view-device">
+        <div class="section-toolbar"><div><p>INVERTER TELEMETRY</p><h2>Device details</h2><span>Complete read-only Matrix electrical, battery, Smart Load and cloud information from the SOLARMAN API.</span></div><div class="pill success"><span></span><b id="deviceOnline">CONNECTING</b></div></div>
+        <div class="device-layout">
+          <article class="card device-hero"><div class="device-hero-icon"><svg><use href="#i-inverter"/></svg></div><div><span>FRONUS MATRIX 6K</span><h2 id="deviceName">Inverter</h2><p>Device <b id="deviceId">—</b></p></div><div class="device-capacity"><span>PV input<strong>6.0 kW</strong></span><span>AC output<strong>6.0 kW</strong></span><span>PV installed<strong>4.36 kWp</strong></span></div></article>
+          <article class="card details-card"><div class="card-heading compact"><div><span>AC INPUT & OUTPUT</span><h2>Grid and load</h2></div></div><dl id="acDetails"></dl></article>
+          <article class="card details-card"><div class="card-heading compact"><div><span>PV INPUT</span><h2>Solar strings</h2></div></div><dl id="pvDetails"></dl></article>
+          <article class="card details-card"><div class="card-heading compact"><div><span>INVERTER</span><h2>Operating state</h2></div></div><dl id="inverterDetails"></dl></article>
+          <article class="card details-card"><div class="card-heading compact"><div><span>CONNECTIVITY</span><h2>Cloud dongle</h2></div></div><dl id="connectivityDetails"></dl></article>
+        </div>
+      </section>
+
+      <section class="view" id="view-settings">
+        <div class="section-toolbar"><div><p>DASHBOARD CONFIGURATION</p><h2>Settings</h2><span>Personalise the Raja Fraz command center and background monitoring.</span></div><button class="primary-button" id="saveSettingsButton">Save settings</button></div>
+        <div class="settings-grid">
+          <article class="card settings-card"><div class="card-heading compact"><div><span>APPEARANCE</span><h2>Dashboard skin</h2></div></div><div class="theme-grid"><button class="theme-option" data-theme="midnight"><i class="theme-preview midnight"></i><span>Midnight</span></button><button class="theme-option" data-theme="carbon"><i class="theme-preview carbon"></i><span>Carbon</span></button><button class="theme-option" data-theme="frost"><i class="theme-preview frost"></i><span>Frost</span></button><button class="theme-option is-active" data-theme="solar"><i class="theme-preview solar"></i><span>Solar</span></button></div></article>
+          <article class="card settings-card"><div class="card-heading compact"><div><span>LIVE MONITORING</span><h2>Collector</h2></div></div><label>Device ID<input id="settingDeviceId" value="" placeholder="Enter device ID" spellcheck="false"><small id="deviceLockNote">Stored by the dashboard server.</small></label><label>Dashboard refresh<select id="settingRefresh"><option value="2000">2 seconds</option><option value="5000" selected>5 seconds</option><option value="10000">10 seconds</option><option value="30000">30 seconds</option></select></label><label class="switch-row"><span><b>Racing gauge sound</b><small>Dynamic engine tone follows total system power</small></span><input type="checkbox" id="settingSound"><i></i></label></article>
+          <article class="card settings-card"><div class="card-heading compact"><div><span>ALERT RULES</span><h2>Thresholds</h2></div></div><div class="field-grid"><label>MPPT temperature<input id="settingTemp" type="number" min="45" max="95" value="75"><small>°C</small></label><label>AC load<input id="settingLoad" type="number" min="50" max="100" value="90"><small>%</small></label><label>Low grid voltage<input id="settingGridLow" type="number" min="140" max="230" value="180"><small>V</small></label><label>High grid voltage<input id="settingGridHigh" type="number" min="220" max="290" value="260"><small>V</small></label></div></article>
+          <article class="card settings-card collector-card"><div class="card-heading compact"><div><span>HOSTED BACKGROUND SERVICE</span><h2>Always-on history</h2></div><b id="collectorStatus">CHECKING</b></div><p>The hosted collector saves one telemetry sample every minute while the service is running.</p><ol><li>Free hosting can sleep after inactivity.</li><li>Ephemeral hosting can erase saved history after a restart.</li><li>Use an always-on service with persistent storage for reliable long-term history.</li></ol><div class="collector-actions"><button class="secondary-button" id="testCollectorButton">Test collector</button><span id="collectorDetail">Checking hosted service…</span></div></article>
+          <article class="card settings-card capacity-card"><div class="card-heading compact"><div><span>CONFIRMED SYSTEM</span><h2>Fixed capacities</h2></div></div><div class="capacity-list"><span>Total solar array<b>4,360 W</b></span><span>PV1 string<b>4,360 W</b></span><span>PV2 string<b>0 W / unused</b></span><span>Inverter PV capacity<b>6,000 W</b></span><span>Inverter output<b>6,000 W</b></span><span>Battery<b>Active</b></span></div></article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" hidden></div>
+  <script src="telemetry.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>
