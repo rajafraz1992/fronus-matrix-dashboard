@@ -2,6 +2,7 @@ import express from "express";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { batteryOnly } from "./battery-only.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -15,6 +16,7 @@ const EMAIL = process.env.SOLARMAN_EMAIL || "";
 const PASSWORD_HASH = process.env.SOLARMAN_PASSWORD_HASH || "";
 const ORG_ID = Number(process.env.SOLARMAN_ORG_ID || 195093);
 const DEVICE_SN = process.env.SOLARMAN_DEVICE_SN || "0230306052";
+const BATTERY_DEVICE_SN = process.env.SOLARMAN_BATTERY_DEVICE_SN || "221101401";
 const STATION_ID = Number(process.env.SOLARMAN_STATION_ID || 3332398);
 const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, "data");
 const HISTORY_FILE = path.join(DATA_DIR, "history.json");
@@ -29,6 +31,17 @@ let tokenCache = { token: "", expiresAt: 0 };
 let liveCache = { at: 0, data: null };
 let weatherCache = { at: 0, data: null };
 let collecting = false;
+let batteryCache = { at: 0, raw: null, pending: null };
+
+async function fetchBatteryOnly() {
+  if (!batteryCache.raw || Date.now() - batteryCache.at >= 60000) {
+    if (!batteryCache.pending) batteryCache.pending = solarmanPost("/device/v1.0/currentData?language=en", { deviceSn: BATTERY_DEVICE_SN })
+      .then(raw => { batteryCache.raw = raw; batteryCache.at = Date.now(); })
+      .finally(() => { batteryCache.pending = null; });
+    await batteryCache.pending;
+  }
+  return batteryOnly(batteryCache.raw, BATTERY_DEVICE_SN);
+}
 
 function readJson(file, fallback) {
   try { return JSON.parse(fs.readFileSync(file, "utf8")); } catch { return fallback; }
@@ -283,6 +296,11 @@ function currentSettings() {
 
 app.get("/", (_req,res) => res.sendFile(path.join(__dirname,"app","index.html")));
 app.get("/api/health", (_req,res) => res.json({ success:true, service:"Raja Fraz Fronus Matrix 6K Dashboard", deviceSn:DEVICE_SN, stationId:STATION_ID }));
+app.get("/api/battery", async (_req,res) => {
+  res.set("Cache-Control", "no-store");
+  try { res.json({ ok: true, data: await fetchBatteryOnly() }); }
+  catch { res.status(502).json({ ok: false, error: "Battery source unavailable" }); }
+});
 app.get("/api/matrix", async (_req,res) => { try { res.json({ success:true, ...(await fetchLive(true)) }); } catch(e) { res.status(500).json({ success:false, msg:e.message }); } });
 app.get("/api/live", async (req,res) => { try { res.json({ ok:true, data: await fetchLive(req.query.fresh === "1") }); } catch(e) { res.status(500).json({ ok:false, error:e.message }); } });
 app.get("/api/history", (req,res) => {
